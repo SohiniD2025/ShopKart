@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
 
@@ -38,7 +42,11 @@ const Home = () => {
           <p className="text-xs text-gray-500">
             Shop the latest trends & exclusive offers
           </p>
-          <button className="bg-[#FF6633] hover:bg-[#e55524] text-white text-xs font-semibold px-6 py-2.5 rounded shadow-sm transition-colors">
+          <button
+            type="button"
+            onClick={() => navigate("/products")}
+            className="bg-[#FF6633] hover:bg-[#e55524] text-white text-xs font-semibold px-6 py-2.5 rounded shadow-sm transition-colors"
+          >
             Shop Now
           </button>
         </div>

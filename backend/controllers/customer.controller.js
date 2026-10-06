@@ -94,7 +94,8 @@ export const loginCustomer = async (req,res)=>{
                         //Send successful response
                         res.status(200).json({
                                     success:true,
-                                    message:"Login Successful"
+                                    message:"Login Successful",
+                                    token
                         })
             }catch(err){
                         return res.status(500).json({

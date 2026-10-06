@@ -22,6 +22,16 @@ const customerSchema = new mongoose.Schema({
         required: true
     },
 
+    wishlist: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Product"
+            }
+        ],
+        default: []
+    },
+
     createdAt: {
             type: Date,
             default: Date.now

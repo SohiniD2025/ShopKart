@@ -4,11 +4,12 @@ import dotenv from 'dotenv'
 import customerRoutes from './routes/customer.routes.js'
 import productRoutes from './routes/product.routes.js';
 import wishlistRoutes from './routes/wishlist.routes.js';
+import cartRoutes from './routes/cart.routes.js';
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const app = express()
-const Port = 8080;
+const Port = process.env.PORT || 8080;
 
 dotenv.config()
 
@@ -25,14 +26,16 @@ app.use(cors({
         const allowedOrigins = [
             process.env.frontendUrl,
             'http://localhost:5173',
-            'http://localhost:5174'
+            'http://localhost:5174',
+            'http://127.0.0.1:5173',
+            'http://127.0.0.1:5174'
         ].filter(Boolean)
 
         if (!origin || allowedOrigins.includes(origin)) {
             return callback(null, true)
         }
 
-        return callback(new Error('Origin not allowed by CORS'))
+        return callback(null, false)
     },
     credentials: true
 }))
@@ -40,7 +43,7 @@ app.use(cors({
 app.use('/customers' , customerRoutes)
 app.use('/products', productRoutes);
 app.use('/wishlist', wishlistRoutes);
-
+app.use('/cart', cartRoutes);
 
 
 app.get('/', (req, res) => {

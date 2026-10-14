@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
     const {
@@ -14,6 +14,8 @@ const Cart = () => {
         removeFromCart
     } = useCart();
 
+    const safeCart = Array.isArray(cart) ? cart : [];
+    const navigate = useNavigate();
     const [updatingId, setUpdatingId] = useState("");
     const [removingId, setRemovingId] = useState("");
     const [actionError, setActionError] = useState("");
@@ -75,7 +77,7 @@ const Cart = () => {
     };
 
     // 1. Loading State
-    if (loading && cart.length === 0) {
+    if (loading && safeCart.length === 0) {
         return (
             <main className="min-h-screen bg-stone-50 px-6 py-10 flex items-center justify-center">
                 <p className="text-stone-600 text-lg">Loading your cart...</p>
@@ -84,7 +86,7 @@ const Cart = () => {
     }
 
     // 2. Error State
-    if (error && cart.length === 0) {
+    if (error && safeCart.length === 0) {
         return (
             <main className="min-h-screen bg-stone-50 px-6 py-10">
                 <div className="mx-auto mt-10 max-w-md rounded-xl border border-red-100 bg-white p-8 text-center shadow-sm">
@@ -107,7 +109,7 @@ const Cart = () => {
     }
 
     // 3. Empty State
-    if (!cart || cart.length === 0) {
+    if (safeCart.length === 0) {
         return (
             <main className="min-h-screen bg-stone-50 px-6 py-10">
                 <section className="mx-auto mt-10 max-w-md rounded-xl border border-stone-200 bg-white p-8 text-center shadow-sm">
@@ -140,7 +142,7 @@ const Cart = () => {
             <div className="mx-auto max-w-7xl">
                 <h1 className="text-3xl font-bold text-stone-900 mb-2">My Cart</h1>
                 <p className="text-stone-500 mb-6">
-                    {cartCount} {cartCount === 1 ? "unit" : "units"} across {cart.length} {cart.length === 1 ? "item" : "items"}
+                    {cartCount} {cartCount === 1 ? "unit" : "units"} across {safeCart.length} {safeCart.length === 1 ? "item" : "items"}
                 </p>
 
                 {actionError && (
@@ -152,7 +154,7 @@ const Cart = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Cart Items List */}
                     <div className="lg:col-span-2 space-y-4">
-                        {cart.map((item) => {
+                        {safeCart.map((item) => {
                             const product = item.product || {};
                             const productId = product._id || item.product;
                             const isUpdating = updatingId === productId;
@@ -256,13 +258,16 @@ const Cart = () => {
                                 <span>₹{subtotal.toLocaleString()}</span>
                             </div>
 
+
                             <button
                                 type="button"
-                                className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
-                                onClick={() => alert("Proceeding to checkout in Lab 06!")}
+                                className="w-full rounded-lg bg-black py-3 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+                                onClick={() => navigate("/checkout")}
+                                disabled={cart.length === 0}
                             >
                                 Proceed to Checkout
                             </button>
+
 
                             <Link
                                 to="/products"

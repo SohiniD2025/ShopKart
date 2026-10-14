@@ -6,10 +6,10 @@ import { useCart } from "../context/CartContext";
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // 1. Live cart count from global CartContext (Task 6 & Task 9 requirement)
   const { cartCount } = useCart();
-  
+
   const [wishlistCount, setWishlistCount] = useState(null);
 
   // Hide Navbar on authentication pages
@@ -75,6 +75,13 @@ const Navbar = () => {
           {/* 2. Cart link with dynamic badge count that updates instantly */}
           <Link to="/cart" className="font-medium hover:text-blue-600 flex items-center gap-1.5">
             Cart <span className="bg-stone-900 text-white text-xs px-2 py-0.5 rounded-full font-bold">{cartCount}</span>
+          </Link>
+
+          <Link
+            to="/orders"
+            className="font-medium hover:text-blue-600"
+          >
+            My Orders
           </Link>
 
           <Link to="/profile" className="font-medium hover:text-blue-600">

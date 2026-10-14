@@ -102,6 +102,11 @@ export const CartProvider = ({ children }) => {
         }, 0);
     }, [cart]);
 
+    const clearCart = () => {
+        setCart([]);
+        setError("");
+    };
+
     const value = {
         cart,
         loading,
@@ -111,7 +116,8 @@ export const CartProvider = ({ children }) => {
         refreshCart,
         addToCart: handleAddToCart,
         updateQuantity: handleUpdateQuantity,
-        removeFromCart: handleRemoveFromCart
+        removeFromCart: handleRemoveFromCart,
+        clearCart
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

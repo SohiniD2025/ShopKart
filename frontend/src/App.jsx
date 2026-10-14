@@ -17,6 +17,11 @@ import Profile from "./pages/Profile";
 // Global Cart Context Provider (Task 6 requirement)
 import { CartProvider } from "./context/CartContext";
 
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
+import Orders from "./pages/Orders";
+import OrderDetails from "./pages/OrderDetails";
+
 function App() {
     return (
         <BrowserRouter>
@@ -38,6 +43,10 @@ function App() {
                         <Route path="/products/:id" element={<ProductDetails />} />
                         <Route path="/wishlist" element={<Wishlist />} />
                         <Route path="/cart" element={<Cart />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/order-success/:id" element={<OrderSuccess />} />
+                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/orders/:id" element={<OrderDetails />} />
                     </Route>
                 </Routes>
             </CartProvider>
